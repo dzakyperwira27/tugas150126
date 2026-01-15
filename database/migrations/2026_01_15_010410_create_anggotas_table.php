@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('anggotas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('kota');
+            $table->string('nama', 50);
+            $table->string('kota', 50);
+            $table->string('nomor_hp', 15);
             $table->timestamps();
         });
     }
