@@ -64,6 +64,15 @@
                 @enderror
             </td>
         </tr>
+<tr>
+    <td>Bidang</td>
+    <td>
+        <input type="text" name="bidang" value="{{ old('bidang', $anggota->bidang ?? '') }}">
+        @error('bidang')
+            <div style="color:red">{{ $message }}</div>
+        @enderror
+    </td>
+</tr>
 
         <tr>
             <td>

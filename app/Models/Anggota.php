@@ -11,5 +11,5 @@ class Anggota extends Model
 
     protected $table = 'anggotas';
 
-    protected $fillable = ['nama', 'kota', 'nomor_hp'];
+    protected $fillable = ['nama', 'kota', 'nomor_hp', 'bidang'];
 }

@@ -25,6 +25,7 @@
         <th>Nama</th>
         <th>Kota</th>
         <th>Nomor HP</th>
+        <th>Bidang</th>
         <th>
             <a href="{{ route('anggota.create') }}" class="btn btn-primary">
                 + Tambah Anggota Baru
@@ -37,6 +38,7 @@
             <td>{{ $anggota->nama }}</td>
             <td>{{ $anggota->kota }}</td>
             <td>{{ $anggota->nomor_hp }}</td>
+            <td>{{ $anggota->bidang }}</td>
             <td>
                 <a href="{{ route('anggota.edit', $anggota->id) }}" class="btn btn-warning">
                     Edit
