@@ -54,7 +54,7 @@
         <tr>
             <td>NOMOR HP</td>
             <td>
-                <input type="number" name="nomor_hp"
+                <input type="text" name="nomor_hp"
                        value="{{ old('nomor_hp', $anggota->nomor_hp) }}">
 
                 @error('nomor_hp')

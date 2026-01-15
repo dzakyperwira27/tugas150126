@@ -17,14 +17,18 @@
 
 <h1>Data Supplier</h1>
 
-<a href="{{ route('supplier.create') }}">Tambah Supplier</a>
+
 
 <table border="1" width="600">
     <tr>
         <th>Nama</th>
         <th>Kota</th>
         <th>CP</th>
-        <th>Aksi</th>
+        <th>
+            <a href="{{ route('supplier.create') }}" class="btn btn-primary">
+                + Tambah Supplier Baru
+            </a>
+        </th>
     </tr>
 
     @foreach ($suppliers as $s)
@@ -33,13 +37,20 @@
         <td>{{ $s->kota }}</td>
         <td>{{ $s->cp }}</td>
         <td>
-            <a href="{{ route('supplier.show', $s->id) }}">Detail</a> |
-            <a href="{{ route('supplier.edit', $s->id) }}">Edit</a> |
-            <form action="{{ route('supplier.destroy', $s->id) }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Hapus</button>
-            </form>
+            <a href="{{ route('supplier.show', $s->id) }}" class="btn btn-primary">Detail</a> |
+            <a href="{{ route('supplier.edit', $s->id) }}" class="btn btn-warning">Edit</a> |
+            <form action="{{ route('supplier.destroy', $s->id) }}"
+                      method="POST"
+                      style="display:inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                            class="btn btn-danger"
+                            onclick="return confirm('Yakin hapus data ini?')">
+                        Hapus
+                    </button>
+                </form>
+           
         </td>
     </tr>
     @endforeach

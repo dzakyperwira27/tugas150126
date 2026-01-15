@@ -42,7 +42,7 @@
         <tr>
             <td>HARGA</td>
             <td>
-                <input type="number" name="harga"
+                <input type="text" name="harga"
                        value="{{ old('harga', $barang->harga) }}">
 
                 @error('harga')
