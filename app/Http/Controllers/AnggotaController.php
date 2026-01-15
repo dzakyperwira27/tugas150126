@@ -20,65 +20,72 @@ class AnggotaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'nama'      => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
-            'kota'      => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
-            'nomor_hp'  => 'required|numeric|digits_between:10,15',
-        ], [
-            'nama.required'     => 'Nama anggota tidak boleh kosong',
-            'nama.regex'        => 'Nama hanya boleh huruf',
-            'kota.required'     => 'Kota tidak boleh kosong',
-            'kota.regex'        => 'Kota hanya boleh huruf',
-            'nomor_hp.required' => 'Nomor HP wajib diisi',
-            'nomor_hp.numeric'  => 'Nomor HP harus angka',
-        ]);
+        $request->validate(
+            [
+                'nama'     => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
+                'kota'     => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
+                'nomor_hp' => 'required|numeric|digits_between:10,15',
+            ],
+            [
+                'nama.required'     => 'Nama anggota tidak boleh kosong',
+                'nama.regex'        => 'Nama hanya boleh huruf',
+                'kota.required'     => 'Kota tidak boleh kosong',
+                'kota.regex'        => 'Kota hanya boleh huruf',
+                'nomor_hp.required' => 'Nomor HP wajib diisi',
+                'nomor_hp.numeric'  => 'Nomor HP harus angka',
+            ]
+        );
 
-        Anggota::create([
-            'nama'     => $request->nama,
-            'kota'     => $request->kota,
-            'nomor_hp' => $request->nomor_hp,
-        ]);
+        Anggota::create($request->only([
+            'nama',
+            'kota',
+            'nomor_hp'
+        ]));
 
         return redirect()
             ->route('anggota.index')
             ->with('success', 'Data anggota berhasil ditambahkan');
     }
 
-    public function show($id)
+    public function show(Anggota $anggota)
     {
-        $anggota = Anggota::findOrFail($id);
-        return view('anggota.show', compact('anggota'));
+        return view('anggota.detail', compact('anggota'));
     }
 
-    public function edit($id)
+    public function edit(Anggota $anggota)
     {
-        $anggota = Anggota::findOrFail($id);
         return view('anggota.edit', compact('anggota'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Anggota $anggota)
     {
-        $request->validate([
-            'nama'     => 'required',
-            'kota'     => 'required',
-            'nomor_hp' => 'required|numeric',
-        ]);
+        $request->validate(
+            [
+                'nama'     => 'required|min:3|max:50',
+                'kota'     => 'required|min:3|max:50',
+                'nomor_hp' => 'required|numeric|digits_between:10,15',
+            ],
+            [
+                'nama.required'     => 'Nama anggota wajib diisi',
+                'kota.required'     => 'Kota wajib diisi',
+                'nomor_hp.required' => 'Nomor HP wajib diisi',
+            ]
+        );
 
-        $anggota = Anggota::findOrFail($id);
-        $anggota->update([
-            'nama'     => $request->nama,
-            'kota'     => $request->kota,
-            'nomor_hp' => $request->nomor_hp,
-        ]);
+        $anggota->update($request->only([
+            'nama',
+            'kota',
+            'nomor_hp'
+        ]));
 
         return redirect()
             ->route('anggota.index')
             ->with('success', 'Data anggota berhasil diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy(Anggota $anggota)
     {
-        Anggota::destroy($id);
+        $anggota->delete();
 
         return redirect()
             ->route('anggota.index')

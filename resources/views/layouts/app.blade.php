@@ -16,7 +16,9 @@
 
         <nav>
             <a href="{{ route('barang.index') }}">Barang</a> |
+            <a href="{{ route('anggota.index') }}">Anggota</a>|
             <a href="{{ route('supplier.index') }}">Supplier</a>
+            
         </nav>
     </div>
 </header>
