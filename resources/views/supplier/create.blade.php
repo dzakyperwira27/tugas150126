@@ -39,6 +39,16 @@
         </td>
     </tr>
     <tr>
+        <td>CP</td>
+        <td>
+        <input type="text" name="cp" value="{{ old('cp') }}">
+        @error('cp')
+            <div style="color:red">{{ $message }}</div>
+        @enderror
+        </td>
+    </tr>
+
+    <tr>
         <td></td>
         <td>
             <button type="submit">Simpan</button>

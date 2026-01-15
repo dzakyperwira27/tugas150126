@@ -23,6 +23,7 @@
     <tr>
         <th>Nama</th>
         <th>Kota</th>
+        <th>CP</th>
         <th>Aksi</th>
     </tr>
 
@@ -30,6 +31,7 @@
     <tr>
         <td>{{ $s->nama }}</td>
         <td>{{ $s->kota }}</td>
+        <td>{{ $s->cp }}</td>
         <td>
             <a href="{{ route('supplier.show', $s->id) }}">Detail</a> |
             <a href="{{ route('supplier.edit', $s->id) }}">Edit</a> |

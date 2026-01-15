@@ -23,16 +23,19 @@ class SupplierController extends Controller
         $request->validate([
             'nama' => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
             'kota' => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
+            'cp'       => 'required|numeric|min:1',
         ], [
             'nama.required' => 'Nama supplier tidak boleh kosong',
             'nama.regex'    => 'Nama supplier hanya boleh huruf',
             'kota.required' => 'Kota tidak boleh kosong',
             'kota.regex'    => 'Kota tidak boleh mengandung angka',
+            'cp.numeric' => 'Harus berupa angka',
         ]);
 
         Supplier::create([
             'nama' => $request->nama,
             'kota' => $request->kota,
+            'cp'       => $request->cp,
         ]);
 
         return redirect()
@@ -57,12 +60,14 @@ class SupplierController extends Controller
         $request->validate([
             'nama' => 'required',
             'kota' => 'required',
+            'cp'   => 'required',
         ]);
 
         $supplier = Supplier::findOrFail($id);
         $supplier->update([
             'nama' => $request->nama,
             'kota' => $request->kota,
+            'cp' => $request->cp,
         ]);
 
         return redirect()

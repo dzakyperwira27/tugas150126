@@ -39,6 +39,13 @@
         </td>
     </tr>
     <tr>
+        <td>CP</td>
+        <td>
+        <input type="text" name="cp" value="{{ $supplier->cp }}">
+        </td>
+    </tr>
+
+    <tr>
         <td></td>
         <td>
             <button type="submit">Update</button>

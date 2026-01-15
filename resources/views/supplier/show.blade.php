@@ -12,6 +12,10 @@
         <td>Kota</td>
         <td>: {{ $supplier->kota }}</td>
     </tr>
+    <tr>
+        <td>Cp</td>
+        <td>: {{ $supplier->cp }}</td>
+    </tr>
 </table>
 
 <a href="{{ route('supplier.index') }}">Kembali</a>
