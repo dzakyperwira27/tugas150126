@@ -1,38 +1,64 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>@yield('title', 'CRUD Barang')</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'Data Barang')</title>
 
-    {{-- CSS dari public --}}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+    @stack('css')
 </head>
-<body>
+<body class="sb-nav-fixed">
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-    <div class="container">
-        <h1 class="logo">CRUD Barang</h1>
+    @include('partials.navbar')
 
-        <nav>
-            <a href="{{ route('barang.index') }}">Barang</a> |
-            <a href="{{ route('anggota.index') }}">Anggota</a>|
-            <a href="{{ route('supplier.index') }}">Supplier</a>
-            
-        </nav>
+    <div id="layoutSidenav">
+        @include('partials.sidebar')
+
+        <div id="layoutSidenav_content">
+            <main class="container-fluid px-4 py-3">
+                @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show auto-dismiss">
+                    {{ session('success') }}
+                </div>
+                @endif
+
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show auto-dismiss">
+                    {{ session('error') }}
+                </div>
+                @endif
+
+                @yield('content')
+            </main>
+
+            @include('partials.footer')
+        </div>
     </div>
-</header>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/scripts.js') }}"></script>
 
-    <!-- CONTENT -->
-    <main class="container content">
-        @yield('content')
-    </main>
+    @stack('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.auto-dismiss');
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>© {{ date('Y') }} CRUD Laravel — Dzaky Perwira Yasig</p>
-    </footer>
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    alert.classList.remove('show');
+                    alert.classList.add('fade');
+
+                    setTimeout(() => alert.remove(), 500);
+                },3000); // 3 detik
+            });
+        });
+
+    </script>
+
 
 </body>
 </html>
+
