@@ -4,19 +4,19 @@
 
 @section('content')
 
-<h2>Data Barang</h2>
+<h1 class="mt-4 mb-4">Data Barang</h1>
 
 {{-- NOTIFIKASI SUKSES --}}
 @if (session('success'))
-    <div class="alert-success">
+    <div class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
 
 {{-- NOTIFIKASI ERROR --}}
 @if ($errors->any())
-    <div class="alert-error">
-        <ul>
+    <div class="alert alert-danger">
+        <ul class="mb-0">
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -24,52 +24,71 @@
     </div>
 @endif
 
-<table>
-    <tr>
-        <th>Nama</th>
-        <th>Deskripsi</th>
-        <th>Harga</th>
-        <th>
-            <a href="{{ route('barang.create') }}" class="btn btn-primary">
-                + Tambah Barang Baru
-            </a>
-        </th>
-    </tr>
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span>
+            <i class="fas fa-box me-1"></i>
+            Daftar Barang
+        </span>
 
-    @forelse ($barangs as $barang)
-        <tr>
-            <td>{{ $barang->nama_barang }}</td>
-            <td>{{ $barang->deskripsi }}</td>
-            <td>{{ $barang->harga }}</td>
-            <td>
-                <a href="{{ route('barang.edit', $barang->id) }}" class="btn btn-warning">
-                    Edit
-                </a>
+        <a href="{{ route('barang.create') }}" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus"></i> Tambah Barang
+        </a>
+    </div>
 
-                <a href="{{ route('barang.show', $barang->id) }}" class="btn btn-primary">
-                    Detail
-                </a>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nama</th>
+                        <th>Deskripsi</th>
+                        <th>Harga</th>
+                        <th width="220">Aksi</th>
+                    </tr>
+                </thead>
 
-                <form action="{{ route('barang.destroy', $barang->id) }}"
-                      method="POST"
-                      style="display:inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit"
-                            class="btn btn-danger"
-                            onclick="return confirm('Yakin hapus data ini?')">
-                        Hapus
-                    </button>
-                </form>
-            </td>
-        </tr>
-    @empty
-        <tr>
-            <td colspan="4" align="center">
-                Data tidak tersedia
-            </td>
-        </tr>
-    @endforelse
-</table>
+                <tbody>
+                    @forelse ($barangs as $barang)
+                        <tr>
+                            <td>{{ $barang->nama_barang }}</td>
+                            <td>{{ $barang->deskripsi }}</td>
+                            <td>Rp {{ number_format($barang->harga, 0, ',', '.') }}</td>
+                            <td>
+                                <a href="{{ route('barang.show', $barang->id) }}"
+                                   class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
+                                <a href="{{ route('barang.edit', $barang->id) }}"
+                                   class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+
+                                <form action="{{ route('barang.destroy', $barang->id) }}"
+                                      method="POST"
+                                      class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Yakin hapus data ini?')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                Data tidak tersedia
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 @endsection

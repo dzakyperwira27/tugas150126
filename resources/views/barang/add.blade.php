@@ -4,56 +4,70 @@
 
 @section('content')
 
-<h1>Tambah Barang Baru</h1>
+<h1 class="mt-4 mb-4">Tambah Barang Baru</h1>
 
-<form action="{{ route('barang.store') }}" method="POST">
-@csrf
-    <table>
-        <tr>
-            <td>NAMA BARANG</td>
-            <td>
-                <input type="text" name="nama_barang">
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-plus me-1"></i>
+        Form Tambah Barang
+    </div>
+
+    <div class="card-body">
+        <form action="{{ route('barang.store') }}" method="POST">
+            @csrf
+
+            <div class="mb-3">
+                <label class="form-label">Nama Barang</label>
+                <input type="text"
+                       name="nama_barang"
+                       class="form-control @error('nama_barang') is-invalid @enderror"
+                       value="{{ old('nama_barang') }}">
+
                 @error('nama_barang')
-                    <div style="color:red; font-size:14px;">
+                    <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
-            </td>
-        </tr>
+            </div>
 
-        <tr>
-            <td>DESKRIPSI</td>
-            <td>
-                <textarea name="deskripsi"></textarea>
+            <div class="mb-3">
+                <label class="form-label">Deskripsi</label>
+                <textarea name="deskripsi"
+                          class="form-control @error('deskripsi') is-invalid @enderror"
+                          rows="3">{{ old('deskripsi') }}</textarea>
+
                 @error('deskripsi')
-                    <div style="color:red; font-size:14px;">
+                    <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
-            </td>
-        </tr>
+            </div>
 
-        <tr>
-            <td>HARGA</td>
-            <td>
-                <input type="text" name="harga">
+            <div class="mb-3">
+                <label class="form-label">Harga</label>
+                <input type="number"
+                       name="harga"
+                       class="form-control @error('harga') is-invalid @enderror"
+                       value="{{ old('harga') }}">
+
                 @error('harga')
-                    <div style="color:red; font-size:14px;">
+                    <div class="invalid-feedback">
                         {{ $message }}
                     </div>
                 @enderror
-            </td>
-        </tr>
+            </div>
 
-        <tr>
-            <td>
-                <a href="{{ route('barang.index') }}">Kembali</a>
-            </td>
-            <td>
-                <button type="submit" class="btn">Simpan ke Database</button>
-            </td>
-        </tr>
-    </table>
-</form>
+            <div class="d-flex justify-content-between">
+                <a href="{{ route('barang.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Simpan Data
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 
 @endsection

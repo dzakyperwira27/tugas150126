@@ -4,27 +4,34 @@
 
 @section('content')
 
-<h1>Detail Data dengan ID {{ $barang->id }}</h1>
+<h1 class="mt-4 mb-4">Detail Barang</h1>
 
-<table>
-    <tr>
-        <td>NAMA BARANG</td>
-        <td>: {{ $barang->nama_barang }}</td>
-    </tr>
-    <tr>
-        <td>DESKRIPSI</td>
-        <td>: {{ $barang->deskripsi }}</td>
-    </tr>
-    <tr>
-        <td>HARGA</td>
-        <td>: {{ $barang->harga }}</td>
-    </tr>
-    <tr>
-        <td>
-            <a href="{{ route('barang.index') }}">Kembali</a>
-        </td>
-        <td></td>
-    </tr>
-</table>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-eye me-1"></i>
+        Detail Data Barang (ID: {{ $barang->id }})
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <th width="200">Nama Barang</th>
+                <td>{{ $barang->nama_barang }}</td>
+            </tr>
+            <tr>
+                <th>Deskripsi</th>
+                <td>{{ $barang->deskripsi }}</td>
+            </tr>
+            <tr>
+                <th>Harga</th>
+                <td>Rp {{ number_format($barang->harga, 0, ',', '.') }}</td>
+            </tr>
+        </table>
+
+        <a href="{{ route('barang.index') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Kembali
+        </a>
+    </div>
+</div>
 
 @endsection
