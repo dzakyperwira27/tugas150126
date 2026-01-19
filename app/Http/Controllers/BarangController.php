@@ -29,24 +29,31 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'nama_barang' => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
             'deskripsi'   => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
             'harga'       => 'required|numeric|min:1',
+            'gambar'      => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
         ], [
-            'nama_barang.required' => 'Nama barang gak boleh kosong bos',
-            'nama_barang.regex' => 'Nama barang gak boleh kosong oy',
-            'deskripsi.regex' => 'Nama barang tidak boleh mengandung angka',
-            'deskripsi.required' => 'Nama barang tidak boleh  angka',
-            'harga.numeric' => 'Harus berupa angka',
+            'nama_barang.required' => 'Nama barang tidak boleh kosong',
+            'nama_barang.regex'    => 'Nama barang hanya boleh huruf',
+            'deskripsi.required'   => 'Deskripsi tidak boleh kosong',
+            'deskripsi.regex'      => 'Deskripsi hanya boleh huruf',
+            'harga.numeric'        => 'Harga harus berupa angka',
+            'gambar.image'         => 'File harus berupa gambar',
+            'gambar.mimes'         => 'Format gambar harus jpg, jpeg, png, atau gif',
         ]);
 
+        $gambarPath = null;
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('public/barang');
+        }
 
         Barang::create([
             'nama_barang' => $request->nama_barang,
             'deskripsi'   => $request->deskripsi,
             'harga'       => $request->harga,
+            'gambar'      => $gambarPath ? basename($gambarPath) : null,
         ]);
 
         return redirect()
@@ -76,16 +83,33 @@ class BarangController extends Controller
     public function update(Request $request, Barang $barang)
     {
         $request->validate([
-            'nama_barang' => 'required',
-            'deskripsi'   => 'required',
-            'harga'       => 'required|numeric',
+            'nama_barang' => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
+            'deskripsi'   => 'required|min:3|max:50|regex:/^[A-Za-z\s]+$/',
+            'harga'       => 'required|numeric|min:1',
+            'gambar'      => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        ], [
+            'nama_barang.required' => 'Nama barang tidak boleh kosong',
+            'nama_barang.regex'    => 'Nama barang hanya boleh huruf',
+            'deskripsi.required'   => 'Deskripsi tidak boleh kosong',
+            'deskripsi.regex'      => 'Deskripsi hanya boleh huruf',
+            'harga.numeric'        => 'Harga harus berupa angka',
+            'gambar.image'         => 'File harus berupa gambar',
+            'gambar.mimes'         => 'Format gambar harus jpg, jpeg, png, atau gif',
         ]);
 
-        $barang->update([
+        $data = [
             'nama_barang' => $request->nama_barang,
             'deskripsi'   => $request->deskripsi,
             'harga'       => $request->harga,
-        ]);
+        ];
+
+        // Upload gambar jika ada
+        if ($request->hasFile('gambar')) {
+            $gambarPath = $request->file('gambar')->store('public/barang');
+            $data['gambar'] = basename($gambarPath);
+        }
+
+        $barang->update($data);
 
         return redirect()
             ->route('barang.index')
