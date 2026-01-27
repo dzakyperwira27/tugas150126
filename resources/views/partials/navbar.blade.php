@@ -14,9 +14,9 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li>
-                    <form method="POST" action="{{-- {{ route('logout') }} --}}">
+                    <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button class="dropdown-item">Logout</button>
+                        <button type="submit">Logout</button>
                     </form>
                 </li>
             </ul>
