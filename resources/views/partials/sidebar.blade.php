@@ -27,6 +27,13 @@
                     Supplier
                 </a>
 
+                <a class="nav-link {{ request()->is('masuk*') ? 'active' : '' }}"
+                   href="{{ route('masuk.index') }}">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    Barang Masuk
+                </a>
             </div>
         </div>
     </nav>
